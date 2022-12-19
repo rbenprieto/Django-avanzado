@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>{% block title %} Index {% endblock title %}</title>
+
 </head>
 <body>
+    {% block body %}
 
+    
     <p>Hello world</p>
     <h1>This is the index of my project</h1>
+    {% endblock body %}
     
+    {% block extrajs %}
+    {% endblock extrajs %}
 </body>
 </html>
