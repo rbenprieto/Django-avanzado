@@ -5,6 +5,7 @@ class Autor(models.Model):
     id = models.AutoField(primary_key=True, editable=False, verbose_name='Id')
     nombre = models.CharField(max_length=255, verbose_name='Nombre')
     apellidos = models.CharField(max_length=255, verbose_name='Apellidos')
+    activo = models.BooleanField(default=True, verbose_name='Autor activo')
     nacionalidad = models.CharField(max_length=100, choices=paises_CHOICES, verbose_name='Nacionalidad')
 
     def __str__(self):

@@ -8,7 +8,8 @@
 {% block body %}
 
     {% if autores %}
-        <table>
+    <h2 style="text-align: center;">Autores</h2>
+        <table style="text-align: center;">
             <thead>
                 <tr>
                     <th>#</th>
@@ -27,13 +28,16 @@
                         <td>{{autor.nacionalidad}}</td>
                         <td>
                             <a href="{% url 'libro:autor-editar' autor.id %}"><Button>Editar</Button></a>
+                            <a href="{% url 'libro:autor-eliminar' autor.id %}"><Button>Eliminar</Button></a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <a href="{% url 'libro:autor-create' %}"><button >Crear autor</button></a>
     {% else %}
-        <h1>No existe ningún autor</h1>
+        <h1 >No existe ningún autor</h1>
     {% endif %}
 
 {% endblock body %}
