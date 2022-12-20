@@ -13,14 +13,28 @@ def home(request):
 
 def createAutor(request):
     if request.method == 'POST':
-        autor_form = AutorForm(request.POST)
-        if autor_form.is_valid():
-            autor_form.save()
-            return redirect('libro:autor-list')
+        # CREACIÓN MEDIANTE FORM
+        # print(request.POST)
+        # autor_form = AutorForm(request.POST)
+        # if autor_form.is_valid():
+        #     autor_form.save()
+        #     return redirect('libro:autor-list')
+
+        # CREACIÓN OBTENIENDO LA DATA DEL REQUEST
+        nombre = request.POST.get('nombre')
+        apellidos = request.POST.get('apellidos')
+        nacionalidad = request.POST.get('nacionalidad')
+        Autor.objects.create(
+            nombre=nombre,
+            apellidos=apellidos,
+            nacionalidad=nacionalidad
+        )
+        return redirect('libro:autor-list')
+
     
-    else:
-        autor_form = AutorForm()
-    return render(request, 'libro/crear_autor.html', {'autor_form': autor_form})
+    # else:
+    #     autor_form = AutorForm()
+    return render(request, 'libro/crear_autor.html')
 
 
 def listarAutor(request):
