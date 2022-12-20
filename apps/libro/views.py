@@ -1,5 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from .forms import AutorForm
+
 from .models import (
     Autor,
     Libro,
@@ -10,7 +12,6 @@ def home(request):
 
 
 def createAutor(request):
-    print('metodo:', request.method)
     if request.method == 'POST':
         autor_form = AutorForm(request.POST)
         if autor_form.is_valid():
@@ -21,9 +22,22 @@ def createAutor(request):
         autor_form = AutorForm()
     return render(request, 'libro/crear_autor.html', {'autor_form': autor_form})
 
+
 def listarAutor(request):
     autores = Autor.objects.all()
     return render(request, 'libro/listar_autor.html', {'autores': autores})
 
-def editarAutor(request):
-    pass
+
+def editarAutor(request, pk):
+    autor = Autor.objects.filter(id=pk).first()
+    if not autor:
+        return render(request, 'libro/crear_autor.html', {'error': 'No existe el autor enviado'}, status=404)
+    if request.method == 'GET':
+        autor_form = AutorForm(instance=autor)
+    else:
+        autor_form = AutorForm(request.POST, instance=autor)
+        if autor_form.is_valid():
+            autor_form.save()
+            return redirect('index')
+    return render(request, 'libro/crear_autor.html', {'autor_form': autor_form})
+    
