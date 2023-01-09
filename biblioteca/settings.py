@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d)sfw86ld41l(hh!)6n)2o7gk1kc=ov_wfx0(r0qyh_s3avue_'
+SECRET_KEY = os.environ.get('BIBLIOTECA_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     #THIRDS
     'jazzmin',
 
+    #NATIVE
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #APPS
     'apps.libro.apps.LibroConfig',
 ]
 
@@ -84,11 +86,12 @@ WSGI_APPLICATION = 'biblioteca.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'biblioteca',
-        'USER': 'postgres',
-        'PASSWORD': 'roma-314',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.environ.get('BIBLIOTECA_DB_NAME'),
+        'USER': os.environ.get('BIBLIOTECA_DB_USER'),
+        'PASSWORD': os.environ.get('BIBLIOTECA_DB_PASSWORD'),
+        'HOST': os.environ.get('BIBLIOTECA_DB_HOST'),
+        'PORT': os.environ.get('BIBLIOTECA_DB_PORT'),
+        'ATOMIC_REQUEST': True,
     }
 }
 
