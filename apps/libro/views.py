@@ -1,14 +1,22 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import AutorForm
+from django.views import generic
 
 from .models import (
     Autor,
     Libro,
 )
 
-def home(request):
-    return render(request,'index.html')
+class InicioView(generic.TemplateView):
+    template_name = 'index.html'
+
+class ListAutoresView(generic.ListView):
+    model = Autor
+    template_name = 'libro/listar_autor.html'
+    context_object_name = 'autores'
+    queryset = Autor.objects.filter(activo=True).order_by('id')
+
 
 
 def createAutor(request):
@@ -36,10 +44,12 @@ def createAutor(request):
     #     autor_form = AutorForm()
     return render(request, 'libro/crear_autor.html')
 
+# def home(request):
+#     return render(request,'index.html')
 
-def listarAutor(request):
-    autores = Autor.objects.filter(activo=True).order_by('id')
-    return render(request, 'libro/listar_autor.html', {'autores': autores})
+# def listarAutor(request):
+#     autores = Autor.objects.filter(activo=True).order_by('id')
+#     return render(request, 'libro/listar_autor.html', {'autores': autores})
 
 
 def editarAutor(request, pk):
